@@ -5,7 +5,7 @@ from google import genai
 import time
 
 app = FastAPI(title="MotoFix API")
-client = genai.Client(api_key="AIzaSyD8ylK516bxp_xGhFe-RyJaYCQ5w-nNy04")
+client = genai.Client(api_key="AIzaSyAKyqkjjePWf8Sizy_NhHvqPQFCw6utIww")
 
 # Modelos de datos
 class ConsultaMoto(BaseModel):
@@ -89,23 +89,21 @@ def diagnosticar(datos: ConsultaMoto):
 
     for modelo_nombre in modelos_disponibles:
         try:
-            prompt = f"""
-            Eres MotoFix IA, el asesor experto del taller mecánico más confiable de Caracas. 
-
-            REGLAS DE CONVERSACIÓN:
-            1. TONO: Profesional, cercano y 'caraqueño' (ej: "rodar", "accidentado en la autopista", "darle rosca").
-            2. ESTRUCTURA:
-            - Empatía + Diagnóstico sencillo.
-            - Urgencia: Qué pasa si no se repara ya (ej: "te vas a quedar accidentado en la Francisco Fajardo").
-            - Solución Proactiva: Ofrece la revisión con el mecánico.
-            - Gancho de Audio: Pide un audio para "afinar el oído".
-
-            3. RESTRICCIÓN: Máximo 4 líneas.
-
-            {aprendizaje_previo}
-            
-            Falla actual: {datos.descripcion}
-            """
+            prompt= (
+                f"""
+                Usted es MotoFix IA, un asistente técnico especializado en motocicletas en Caracas.
+                
+                INSTRUCCIONES DE RESPUESTA:
+                1. DIAGNÓSTICO: Analice la falla y mencione brevemente las causas técnicas probables.
+                2. BREVEDAD: Mantenga la respuesta en un máximo de 3 a 4 líneas de texto.
+                3. PROTOCOLO PROFESIONAL: 
+                - Si la falla compromete la seguridad o el motor interno, responda: "Debido a la complejidad técnica, se recomienda una inspección profesional inmediata. ¿Desea agendar una cita con nuestro especialista en [Zona de Caracas]?"
+                - Si el usuario muestra interés en la revisión, instrúyalo a escribir 'AGENDAR'.
+                
+                CONTEXTO TÉCNICO PREVIO:
+                {aprendizaje_previo}
+                """
+            )
 
             response = client.models.generate_content(
                 model=modelo_nombre, 

@@ -1,0 +1,12 @@
+
+# No subir la llave de Google
+.env
+config.py
+
+# No subir la base de datos (para que cada entorno tenga la suya o empiece de cero)
+*.db
+
+# No subir carpetas de entorno virtual
+venv/
+__pycache__/
+.ipynb_checkpoints/ 
