@@ -5,7 +5,7 @@ from google import genai
 import time
 
 app = FastAPI(title="MotoFix API")
-client = genai.Client(api_key="AIzaSyAKyqkjjePWf8Sizy_NhHvqPQFCw6utIww")
+client = genai.Client(api_key="api")
 
 # Modelos de datos
 class ConsultaMoto(BaseModel):
